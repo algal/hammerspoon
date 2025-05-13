@@ -364,6 +364,7 @@ void deviceWatcherDoCallback(CMIODeviceID deviceId, NSString *event) {
 
     if (deviceWatcher->callback == LUA_NOREF) {
         [skin logWarn:@"hs.camera devices watcher callback fired, but there is no callback. This is a bug"];
+        _lua_stackguard_exit(skin.L);
         return;
     }
 
