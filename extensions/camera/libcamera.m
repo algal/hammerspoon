@@ -368,7 +368,11 @@ void deviceWatcherDoCallback(CMIODeviceID deviceId, NSString *event) {
     }
 
     [skin pushLuaRef:refTable ref:deviceWatcher->callback];
-    [skin pushNSObject:[cameraManager cameraForDeviceID:deviceId]];
+    if ([event isEqualToString:@"Removed"]) {
+        [skin pushNSObject:nil];
+    } else {
+        [skin pushNSObject:[cameraManager cameraForDeviceID:deviceId]];
+    }
     [skin pushNSObject:event];
     [skin protectedCallAndError:@"hs.camera devices callback" nargs:2 nresults:0];
 
